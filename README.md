@@ -38,6 +38,24 @@ You can create Presets to quickly switch between lists of counters and sounds fo
 -	Display/hide counters or sounds
 -	Minimize to tray
 
+## Development workflow in this fork
+This repository contains a classic .NET Framework WPF solution, so the development flow is a little different from a modern .NET project.
+
+### Building with VS Code
+- Use the VS Code build task or Visual Studio MSBuild to build the solution.
+- In VS Code, press `Ctrl+Shift+B` or run the build task named `Build solution (MSBuild)`.
+- The task resolves MSBuild through `vswhere` first, and falls back to `msbuild` on your `PATH`.
+- This is preferred over `dotnet build` for this solution, because the project uses legacy WPF build targets!
+
+### Run
+- After building, start the application from the generated executable at `DCSB/bin/Debug/DCSB.exe`.
+- If you build Release, the executable will be at `DCSB/bin/Release/DCSB.exe`.
+- You can launch it from PowerShell with `Start-Process .\DCSB\bin\Debug\DCSB.exe`.
+
+### Notes
+- If the build task cannot find MSBuild, install Visual Studio Build Tools or open the repo from a Visual Studio Developer Command Prompt.
+- If VS Code still shows an older task, reload the window so it picks up the latest `.vscode/tasks.json`.
+
 ## Please read:
 If you come across any bug, something stops working or the program crashes please create issue here. Include as much information as you can provide (any error messages, what stopped working, what were you doing when it happened, what version you are using...).
 Usually restarting the program/running it as an administrator helps.

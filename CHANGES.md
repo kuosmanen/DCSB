@@ -50,4 +50,13 @@ It is provided to make GPLv3 distribution compliance easier by documenting modif
 	- `DCSB/MainWindow.xaml`
 	- `DCSB/Properties/Resources.Designer.cs`
 
+- Added portable VS Code MSBuild build task
+
+- Tooling: added a default VS Code build task in `.vscode/tasks.json` that builds `DCSB.sln` using MSBuild.
+- Portability: removed machine-specific MSBuild path and added runtime MSBuild resolution using `vswhere` with a `msbuild`-from-PATH fallback.
+- Behavior: keeps `Ctrl+Shift+B`/Run Build Task on MSBuild (instead of `dotnet build`) for this legacy .NET Framework WPF solution.
+- Validation: task command flow was executed and build succeeded.
+- Files modified:
+	- `.vscode/tasks.json`
+
 	
