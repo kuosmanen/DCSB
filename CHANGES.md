@@ -56,7 +56,27 @@ It is provided to make GPLv3 distribution compliance easier by documenting modif
 - Portability: removed machine-specific MSBuild path and added runtime MSBuild resolution using `vswhere` with a `msbuild`-from-PATH fallback.
 - Behavior: keeps `Ctrl+Shift+B`/Run Build Task on MSBuild (instead of `dotnet build`) for this legacy .NET Framework WPF solution.
 - Validation: task command flow was executed and build succeeded.
+- Added documentation on how to build and run this project in VS Code 
 - Files modified:
 	- `.vscode/tasks.json`
+	- `README.md`
+
+- Refined the sound search bar layout and placeholder text
+
+- UI: added a gray `Search...` placeholder to the sound search box so the empty state is clearer.
+- UI: centered the search box, `in` label, and scope button within the top row between the `Sounds` title and the volume slider.
+- Behavior: the search scope toggle remains between `current preset` and `all presets`.
+- Files modified:
+	- `DCSB.Views/MainWindow/SoundListView.xaml`
+	- `DCSB.Views/MainWindow/SoundListView.xaml.cs`
+	- `DCSB.Views\DCSB.Views.csproj`
+
+- Resolved GalaSoft.MvvmLight reference warnings
+
+- Build: aligned `DCSB.Converters` to use `GalaSoft.MvvmLight` version `5.4.1.0` to match the rest of the solution and reduce assembly version mismatch warnings.
+- References: replaced the old implicit `5.3.0.19026` reference with an explicit reference and `HintPath` to `packages/MvvmLightLibs.5.4.1/lib/net45/GalaSoft.MvvmLight.dll`.
+- Validation: rebuilt `DCSB.sln` with MSBuild and confirmed successful build.
+- Files modified:
+	- `DCSB.Converters/DCSB.Converters.csproj`
 
 	

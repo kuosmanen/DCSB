@@ -36,14 +36,26 @@
                 </ContentControl.Style>
             </Label>
 
-            <TextBox x:Name="SearchBox"
-                     DockPanel.Dock="Left"
-                     Margin="3"
+                <StackPanel DockPanel.Dock="Left"
+                    Orientation="Horizontal"
+                    Margin="3,0,0,0"
+                    VerticalAlignment="Center">
+                <TextBox x:Name="SearchBox"
+                     Margin="0"
                      Height="24"
                      Width="180"
                      VerticalAlignment="Center"
                      ToolTip="Type to search sounds"
                      TextChanged="SearchBox_TextChanged" />
+                <TextBlock Text="in "
+                       Margin="6,0,3,0"
+                       VerticalAlignment="Center" />
+                <Button x:Name="SearchScopeButton"
+                    MinWidth="95"
+                    Padding="8,0"
+                    VerticalAlignment="Center"
+                    Click="SearchScopeButton_Click" />
+                </StackPanel>
             
             <Slider x:Name="VolumeSlider"
                     VerticalAlignment="Center"
@@ -106,8 +118,9 @@
             <StackPanel />
         </DockPanel>
 
-        <DataGrid x:Name="SoundsDataGrid" ItemsSource="{Binding ConfigurationModel.SelectedPreset.SoundCollection}" Loaded="SoundsDataGrid_Loaded"
-              SelectedItem="{Binding ConfigurationModel.SelectedPreset.SelectedSound, Mode=TwoWay}"
+        <DataGrid x:Name="SoundsDataGrid"
+                  Loaded="SoundsDataGrid_Loaded"
+                  SelectionChanged="SoundsDataGrid_SelectionChanged"
                   Interactivity:Commands.DoubleClickCommand="{Binding PlayCommand}"
                   AutoGenerateColumns="False"
                   CanUserReorderColumns="False"
