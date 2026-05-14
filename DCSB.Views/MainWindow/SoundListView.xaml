@@ -68,6 +68,14 @@
             <StackPanel />
         </DockPanel>
 
+        <TextBox x:Name="SearchBox"
+             DockPanel.Dock="Top"
+             Margin="3"
+             Height="24"
+             VerticalAlignment="Center"
+             ToolTip="Type to search sounds"
+             TextChanged="SearchBox_TextChanged" />
+
         <DockPanel DockPanel.Dock="Bottom">
             <Controls:IconButton DockPanel.Dock="Left" 
                                  Content="{StaticResource AddIcon}"
@@ -97,8 +105,8 @@
             <StackPanel />
         </DockPanel>
 
-        <DataGrid ItemsSource="{Binding ConfigurationModel.SelectedPreset.SoundCollection}" 
-                  SelectedItem="{Binding ConfigurationModel.SelectedPreset.SelectedSound, Mode=TwoWay}"
+        <DataGrid x:Name="SoundsDataGrid" ItemsSource="{Binding ConfigurationModel.SelectedPreset.SoundCollection}" Loaded="SoundsDataGrid_Loaded"
+              SelectedItem="{Binding ConfigurationModel.SelectedPreset.SelectedSound, Mode=TwoWay}"
                   Interactivity:Commands.DoubleClickCommand="{Binding PlayCommand}"
                   AutoGenerateColumns="False"
                   CanUserReorderColumns="False"
