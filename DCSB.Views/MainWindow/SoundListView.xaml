@@ -35,6 +35,15 @@
                     </Style>
                 </ContentControl.Style>
             </Label>
+
+            <TextBox x:Name="SearchBox"
+                     DockPanel.Dock="Left"
+                     Margin="3"
+                     Height="24"
+                     Width="180"
+                     VerticalAlignment="Center"
+                     ToolTip="Type to search sounds"
+                     TextChanged="SearchBox_TextChanged" />
             
             <Slider x:Name="VolumeSlider"
                     VerticalAlignment="Center"
@@ -67,14 +76,6 @@
 
             <StackPanel />
         </DockPanel>
-
-        <TextBox x:Name="SearchBox"
-             DockPanel.Dock="Top"
-             Margin="3"
-             Height="24"
-             VerticalAlignment="Center"
-             ToolTip="Type to search sounds"
-             TextChanged="SearchBox_TextChanged" />
 
         <DockPanel DockPanel.Dock="Bottom">
             <Controls:IconButton DockPanel.Dock="Left" 
