@@ -79,4 +79,29 @@ It is provided to make GPLv3 distribution compliance easier by documenting modif
 - Files modified:
 	- `DCSB.Converters/DCSB.Converters.csproj`
 
+- Normalized remaining package/framework metadata to .NET Framework 4.8 to fix warnings
+
+- Packages: updated all `packages.config` `targetFramework` values from `net45`/`net452`/`net461` to `net48`.
+- References: updated `DCSB.Sound/DCSB.SoundPlayer.csproj` to use `GalaSoft.MvvmLight` `5.4.1.0` with explicit `HintPath` (replacing stale `5.3.0.19026`).
+- Validation: solution builds successfully with MSBuild after these updates.
+- Files modified:
+	- `DCSB/packages.config`
+	- `DCSB.Business/packages.config`
+	- `DCSB.Interactivity/packages.config`
+	- `DCSB.Models/packages.config`
+	- `DCSB.Sound/packages.config`
+	- `DCSB.ViewModels/packages.config`
+	- `DCSB.Sound/DCSB.SoundPlayer.csproj`
+
+- Audited and aligned remaining package version references
+
+- Audit: checked all `packages.config`, project reference versions, and app `bindingRedirect` entries for stale package versions.
+- Config: updated stale `GalaSoft.MvvmLight` binding redirects from `5.3.0.19026` to `5.4.1.0`.
+- Scope: local `packages/` contains one installed version per package ID, so no additional in-repo package version bumps were possible without fetching newer packages.
+- Validation: MSBuild verification completed with `BUILD_EXIT=0`.
+- Files modified:
+	- `DCSB.Converters/app.config`
+	- `DCSB.Sound/app.config`
+	- `DCSB.Views/app.config`
+
 	
