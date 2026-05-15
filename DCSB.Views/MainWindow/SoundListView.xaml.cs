@@ -241,6 +241,7 @@ namespace DCSB.Views.MainWindow
             }
 
             selectedPreset.SelectedSound = selectedSound;
+            _configurationModel.ActiveSound = selectedSound;
         }
 
         private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

@@ -45,6 +45,7 @@
                      Height="24"
                      Width="180"
                      VerticalAlignment="Center"
+                     VerticalContentAlignment="Center"
                      ToolTip="Type to search sounds"
                      TextChanged="SearchBox_TextChanged" />
                 <TextBlock Text="in "

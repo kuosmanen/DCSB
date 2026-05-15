@@ -263,9 +263,9 @@ namespace DCSB.ViewModels
         }
         private void OpenSound()
         {
-            if (_configurationModel.SelectedPreset.SelectedSound != null)
+            if (_configurationModel.ActiveSound != null)
             {
-                _applicationStateModel.ModifiedSound = _configurationModel.SelectedPreset.SelectedSound;
+                _applicationStateModel.ModifiedSound = _configurationModel.ActiveSound;
                 _applicationStateModel.SoundOpened = true;
             }
         }
@@ -321,12 +321,12 @@ namespace DCSB.ViewModels
         private void OpenSoundFileDialog()
         {
             string[] result = _openFileManager.OpenSoundFiles();
-            if (result != null)
+            if (result != null && _configurationModel.ActiveSound != null)
             {
-                _configurationModel.SelectedPreset.SelectedSound.Files.Clear();
+                _configurationModel.ActiveSound.Files.Clear();
                 foreach (string file in result)
                 {
-                    _configurationModel.SelectedPreset.SelectedSound.Files.Add(file);
+                    _configurationModel.ActiveSound.Files.Add(file);
                 }
             }
         }
@@ -493,6 +493,7 @@ namespace DCSB.ViewModels
         {
             Sound sound = new Sound();
             _configurationModel.SelectedPreset.SelectedSound = sound;
+            _configurationModel.ActiveSound = sound;
             _configurationModel.SelectedPreset.SoundCollection.Add(sound);
             _applicationStateModel.ModifiedSound = sound;
             _applicationStateModel.SoundOpened = true;
@@ -504,7 +505,17 @@ namespace DCSB.ViewModels
         }
         private void RemoveSound()
         {
-            _configurationModel.SelectedPreset.SoundCollection.Remove(_configurationModel.SelectedPreset.SelectedSound);
+            if (_configurationModel.ActiveSound != null)
+            {
+                foreach (var preset in _configurationModel.PresetCollection)
+                {
+                    if (preset.SoundCollection.Contains(_configurationModel.ActiveSound))
+                    {
+                        preset.SoundCollection.Remove(_configurationModel.ActiveSound);
+                        break;
+                    }
+                }
+            }
         }
 
         public ICommand PlayCommand
@@ -513,9 +524,9 @@ namespace DCSB.ViewModels
         }
         private void Play()
         {
-            if (_configurationModel.SelectedPreset.SelectedSound != null)
+            if (_configurationModel.ActiveSound != null)
             {
-                _soundManager.Play(_configurationModel.SelectedPreset.SelectedSound);
+                _soundManager.Play(_configurationModel.ActiveSound);
             }
         }
 

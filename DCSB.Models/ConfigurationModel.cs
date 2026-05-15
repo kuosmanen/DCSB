@@ -171,6 +171,18 @@ namespace DCSB.Models
             }
         }
 
+        private Sound _activeSound;
+        [XmlIgnore]
+        public Sound ActiveSound
+        {
+            get { return _activeSound; }
+            set
+            {
+                _activeSound = value;
+                RaisePropertyChanged("ActiveSound");
+            }
+        }
+
         private CounterShortcuts _counterShortcuts;
         public CounterShortcuts CounterShortcuts
         {

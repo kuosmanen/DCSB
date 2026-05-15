@@ -121,3 +121,11 @@ It is provided to make GPLv3 distribution compliance easier by documenting modif
 	- `DCSB.Views/MainWindow/SoundListView.xaml.cs`
 
 
+- Fixed search bar text alignment and "all presets" sound commands
+- Bug: the `Play`, `Remove`, and `OpenSound` commands relied on `SelectedPreset.SelectedSound`, which meant if you selected a sound from a different preset in "all presets" mode (where `SelectedPreset` no longer changes), the commands would do nothing.
+- Fix: introduced `ActiveSound` in `ConfigurationModel` to track the globally selected sound across the UI regardless of the active preset. Updated `SoundListView.xaml.cs` to set this, and `ViewModel.cs` to execute sound commands against `ActiveSound` instead.
+- Files modified:
+	- `DCSB.Views/MainWindow/SoundListView.xaml`
+	- `DCSB.Views/MainWindow/SoundListView.xaml.cs`
+	- `DCSB.Models/ConfigurationModel.cs`
+	- `DCSB.ViewModels/ViewModel.cs`
