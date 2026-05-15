@@ -125,7 +125,10 @@ namespace DCSB.Views.MainWindow
 
         private void SoundCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            RefreshSoundSource();
+            Dispatcher.BeginInvoke(new System.Action(() =>
+            {
+                RefreshSoundSource();
+            }));
         }
 
         private void EnsureView()
@@ -157,9 +160,14 @@ namespace DCSB.Views.MainWindow
 
             RebuildAllSounds();
 
-            SoundsDataGrid.ItemsSource = _searchScope == SearchScope.AllPresets
+            var newSource = _searchScope == SearchScope.AllPresets
                 ? (IEnumerable)_allSounds
                 : _configurationModel.SelectedPreset.SoundCollection;
+
+            if (SoundsDataGrid.ItemsSource != newSource)
+            {
+                SoundsDataGrid.ItemsSource = newSource;
+            }
 
             EnsureView();
             RefreshFilter();

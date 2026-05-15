@@ -134,6 +134,8 @@ It is provided to make GPLv3 distribution compliance easier by documenting modif
 
 - Bug: clicking to add a sound when in "all presets" mode could behave unexpectedly, or duplicate sounds. Because the active sound was changing, it might add to an unintended preset.
 - Fix: Modified `AddSound()` in `ViewModel.cs` to explicitly detect which preset the currently `ActiveSound` belongs to (by checking all presets), and appends the new sound to that target preset.
+- Bug: Sound appearing twice when added in a preset.
 - Files modified:
 	- `DCSB.ViewModels/ViewModel.cs`
 	- `DCSB.ViewModels/ViewModel.cs`
+	- `DCSB.Views\MainWindow\SoundListView.xaml.cs`
