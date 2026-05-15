@@ -492,9 +492,23 @@ namespace DCSB.ViewModels
         private void AddSound()
         {
             Sound sound = new Sound();
-            _configurationModel.SelectedPreset.SelectedSound = sound;
+            
+            Preset targetPreset = _configurationModel.SelectedPreset;
+            if (_configurationModel.ActiveSound != null)
+            {
+                foreach (var preset in _configurationModel.PresetCollection)
+                {
+                    if (preset.SoundCollection.Contains(_configurationModel.ActiveSound))
+                    {
+                        targetPreset = preset;
+                        break;
+                    }
+                }
+            }
+
+            targetPreset.SelectedSound = sound;
             _configurationModel.ActiveSound = sound;
-            _configurationModel.SelectedPreset.SoundCollection.Add(sound);
+            targetPreset.SoundCollection.Add(sound);
             _applicationStateModel.ModifiedSound = sound;
             _applicationStateModel.SoundOpened = true;
         }
