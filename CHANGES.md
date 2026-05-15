@@ -104,4 +104,20 @@ It is provided to make GPLv3 distribution compliance easier by documenting modif
 	- `DCSB.Sound/app.config`
 	- `DCSB.Views/app.config`
 
-	
+
+## 2026-05-15
+
+- Fixed sound selection behavior in "all presets" mode
+
+- Bug: clicking a sound in "all presets" mode that belonged to a different preset would require two clicks to visually select. The first click was swallowed because changing the active preset rebuilt the `AllPresets` item list and cleared the DataGrid selection.
+- Fix: updated `ConfigurationModel_PropertyChanged` in `DCSB.Views/MainWindow/SoundListView.xaml.cs` to only rebuild the item list and refresh the view if the search scope is `CurrentPreset`. When in `AllPresets` mode, the list is not unnecessarily rebuilt when the active preset changes.
+- Changed behavior: selecting a sound in "all presets" mode no longer changes the currently active preset.
+- Files modified:
+	- `DCSB.Views/MainWindow/SoundListView.xaml.cs`
+	- `DCSB.Models\ObservableObjectCollection.cs`
+- Bug: typing in the search box triggered a filter refresh on every keystroke, which could get CPU intensive and laggy on large sound collections.
+- Fix: implemented debouncing using `DispatcherTimer` in `DCSB.Views/MainWindow/SoundListView.xaml.cs`. The search filtering now waits for 100 milliseconds of typing inactivity before refreshing the list.
+- Files modified:
+	- `DCSB.Views/MainWindow/SoundListView.xaml.cs`
+
+

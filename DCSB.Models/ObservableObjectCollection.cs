@@ -56,7 +56,12 @@ namespace DCSB.Models
 
         private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            // Intentionally left blank: property changes on items should NOT trigger
+            // a collection Reset notification. Individual item property changes
+            // are observable via INotifyPropertyChanged on the items themselves,
+            // which WPF data binding handles without requiring collection-level
+            // change events. Emitting Reset here caused unnecessary UI refreshes
+            // and feedback loops.
         }
     }
 }

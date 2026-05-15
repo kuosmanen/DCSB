@@ -27,11 +27,21 @@ namespace DCSB.Views.MainWindow
         private ICollectionView _view;
         private ConfigurationModel _configurationModel;
         private SearchScope _searchScope = SearchScope.CurrentPreset;
+        private bool _suppressSelectionChanged = false;
+        private readonly System.Windows.Threading.DispatcherTimer _searchTimer = new System.Windows.Threading.DispatcherTimer();
 
         public SoundListView()
         {
             InitializeComponent();
             DataContextChanged += SoundListView_DataContextChanged;
+
+            //0.1 second delay after user stops typing before refreshing filter to avoid high CPU usage on large sound lists
+            _searchTimer.Interval = System.TimeSpan.FromMilliseconds(100);
+            _searchTimer.Tick += (s, e) =>
+            {
+                _searchTimer.Stop();
+                RefreshFilter();
+            };
         }
 
         private void SoundsDataGrid_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -84,7 +94,11 @@ namespace DCSB.Views.MainWindow
         {
             if (e.PropertyName == nameof(ConfigurationModel.SelectedPreset))
             {
-                RefreshSoundSource();
+                if (_searchScope == SearchScope.CurrentPreset)
+                {
+                    // This refresh should make the sound blue when clicked in the list even if it's in a different preset
+                    RefreshSoundSource();
+                }
             }
         }
 
@@ -153,7 +167,16 @@ namespace DCSB.Views.MainWindow
 
             if (selectedSound != null)
             {
-                SoundsDataGrid.SelectedItem = selectedSound;
+                try
+                {
+                    // Guarding with suppression to avoid recursive refresh-selection loops that cause StackOverflow when selecting a sound in "all presets" mode
+                    _suppressSelectionChanged = true;
+                    SoundsDataGrid.SelectedItem = selectedSound;
+                }
+                finally
+                {
+                    _suppressSelectionChanged = false;
+                }
             }
         }
 
@@ -202,11 +225,13 @@ namespace DCSB.Views.MainWindow
 
         private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            RefreshFilter();
+            _searchTimer.Stop();
+            _searchTimer.Start();
         }
 
         private void SoundsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_suppressSelectionChanged) return;
             if (_configurationModel == null || !(SoundsDataGrid.SelectedItem is Sound selectedSound)) return;
 
             Preset selectedPreset;
@@ -215,7 +240,6 @@ namespace DCSB.Views.MainWindow
                 selectedPreset = _configurationModel.SelectedPreset;
             }
 
-            _configurationModel.SelectedPreset = selectedPreset;
             selectedPreset.SelectedSound = selectedSound;
         }
 
